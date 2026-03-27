@@ -49,6 +49,15 @@ def find_by_title(collection, query)
   end
 end
 
+# find by author
+def find_by_author(collection, author_query)
+  collection.select do |_, book|
+    book[:authors].any? do |author|
+      author.downcase.include?(author_query.downcase)
+    end
+  end
+end
+
 # filter by genre
 def filter_by_genre(collection, genre)
   collection.select do |_, book|

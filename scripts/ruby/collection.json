@@ -1,1 +1,101 @@
-{}
+{
+  "1": {
+    "title": "1984",
+    "authors": ["Орвелл"],
+    "genres": ["Антиутопія"],
+    "main_characters": ["Вінстон"],
+    "publisher": "Secker",
+    "published_date": "1949-06-08",
+    "pages": 328,
+    "rating": 4.7,
+    "status": "read"
+  },
+  "2": {
+    "title": "Кобзар",
+    "authors": ["Тарас Шевченко"],
+    "genres": ["Поезія", "Класика"],
+    "main_characters": ["Ярема", "Оксана"],
+    "publisher": "Фоліо",
+    "published_date": "1840-01-01",
+    "pages": 240,
+    "rating": 9.5,
+    "status": "read"
+  },
+  "3": {
+    "title": "Майстер і Маргарита",
+    "authors": ["Михайло Булгаков"],
+    "genres": ["Роман", "Фантастика"],
+    "main_characters": ["Воланд", "Маргарита"],
+    "publisher": "КСД",
+    "published_date": "1967-01-01",
+    "pages": 480,
+    "rating": 9.3,
+    "status": "reading"
+  },
+  "4": {
+    "title": "Гаррі Поттер і філосовський камінь",
+    "authors": ["Джоан Роулінг"],
+    "genres": ["Фентезі"],
+    "main_characters": ["Гаррі Поттер", "Герміона", "Рон"],
+    "publisher": "Bloomsbury",
+    "published_date": "1997-06-26",
+    "pages": 223,
+    "rating": 9.6,
+    "status": "read"
+  }, 
+  "5": {
+    "title": "Тіні забутих предків",
+    "authors": ["Михайло Коцюбинський"],
+    "genres": ["Повість", "Класика"],
+    "main_characters": ["Іван", "Марічка"],
+    "publisher": "Дніпро",
+    "published_date": "1911-01-01",
+    "pages": 160,
+    "rating": 8.9,
+    "status": "abandoned"
+  },
+  "6": {
+    "title": "The Hobbit",
+    "authors": ["J.R.R. Tolkien"],
+    "genres": ["Фентезі", "Пригоди"],
+    "main_characters": ["Більбо Беггінс", "Гендальф"],
+    "publisher": "Allen & Unwin",
+    "published_date": "1937-09-21",
+    "pages": 310,
+    "rating": 9.4,
+    "status": "reading"
+  },
+  "7": {
+    "title": "To kill a Mockingbird",
+    "authors": ["Harper Lee"],
+    "genres": ["Роман", "Драма"],
+    "main_characters": ["Скаут", "Аттікус"],
+    "publisher": "J.B. Lippincott & Co.",
+    "published_date": "1960-07-11",
+    "pages": 281,
+    "rating": 9.1,
+    "status": "abandoned"
+  },
+  "8": {
+    "title": "Перший серед рівних",
+    "authors": ["Жорж Бор", "Юрій Винокуров"],
+    "genres": ["Роман", "Фантастика"],
+    "main_characters": ["Елрог"],
+    "publisher": "Самиздат",
+    "published_date": "2024-12-23",
+    "pages": 238,
+    "rating": 7.3,
+    "status": "abandoned"
+  },
+  "9": {
+    "title": "Хранители книг",
+    "authors": ["Олег Рой"],
+    "genres": ["Роман", "Фантастика"],
+    "main_characters": ["Женя", "Оля", "собака Баська"],
+    "publisher": "ЭКСМО",
+    "published_date": "2010-01-01",
+    "pages": 128,
+    "rating": 8.3,
+    "status": "read"
+  }
+}
