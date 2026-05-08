@@ -6,22 +6,10 @@ manager = BookManager.new
 # Автозавантаження при старті: спочатку YAML, потім JSON, потім порожній стан
 # YAML має пріоритет, бо він зберігається автоматично при виході
 puts "Завантаження даних..."
-yaml_loaded = false
 
-begin
-  manager.load_from_yaml("books.yaml")
-  yaml_loaded = true
-rescue Errno::ENOENT
-  # YAML не знайдено — пробуємо JSON
-end
-
-unless yaml_loaded
-  begin
-    manager.load_from_json("books.json")
-  rescue Errno::ENOENT
-    puts "Починаємо з порожньої колекції"
-  end
-end
+loaded = manager.load_from_yaml("books.yaml")
+loaded = manager.load_from_json("books.json") unless loaded
+puts "Починаємо з порожньої колекції" unless loaded
 
 # Основний цикл програми
 # ensure гарантує збереження навіть при помилці або Ctrl+C

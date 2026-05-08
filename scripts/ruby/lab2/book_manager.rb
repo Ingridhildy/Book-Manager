@@ -119,10 +119,13 @@ class BookManager
   end
 
   def load_from_yaml(filename)
-    @collection = YAML.load_file(filename)
+    @collection = YAML.load_file(filename) || {}
+    return false if @collection.empty?
     puts "Завантажено #{@collection.size} книг з #{filename}"
+    true
   rescue Errno::ENOENT
     puts "YAML файл '#{filename}' не знайдено"
+    false
   end
 
   # -------------------------
@@ -145,8 +148,11 @@ class BookManager
       # Відновлюємо об'єкт Book з хешу через self.from_h
       Book.from_h(book_hash)
     end
+    return false if @collection.empty?
     puts "Завантажено #{@collection.size} книг з #{filename}"
+    true
   rescue Errno::ENOENT
     puts "JSON файл '#{filename}' не знайдено"
+    false
   end
 end
