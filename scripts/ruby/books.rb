@@ -86,7 +86,10 @@ end
 
 # load from json
 def load_from_json(filename)
-  JSON.parse(File.read(filename), symbolize_names: true)
+  data = JSON.parse(File.read(filename), symbolize_names: true)
+  # JSON зберігає ключі як рядки ("1", "2"), symbolize_names робить їх :"1", :"2"
+  # Конвертуємо назад у Integer, щоб edit_book/delete_book знаходили записи за id
+  data.transform_keys { |k| k.to_s.to_i }
 rescue Errno::ENOENT
   puts "Файл #{filename} не знайдено"
   {}

@@ -3,12 +3,16 @@ require_relative 'book_manager'
 
 manager = BookManager.new
 
+# Шляхи до файлів відносно розташування самого скрипта (не поточної директорії)
+YAML_FILE = File.expand_path("books.yaml", __dir__)             # lab2/books.yaml
+JSON_FILE  = File.expand_path("../books.json", __dir__)         # scripts/ruby/books.json
+
 # Автозавантаження при старті: спочатку YAML, потім JSON, потім порожній стан
 # YAML має пріоритет, бо він зберігається автоматично при виході
 puts "Завантаження даних..."
 
-loaded = manager.load_from_yaml("books.yaml")
-loaded = manager.load_from_json("books.json") unless loaded
+loaded = manager.load_from_yaml(YAML_FILE)
+loaded = manager.load_from_json(JSON_FILE) unless loaded
 puts "Починаємо з порожньої колекції" unless loaded
 
 # Основний цикл програми
@@ -115,6 +119,6 @@ begin
 
 ensure
   # Автозбереження у YAML при будь-якому виході (навіть при Ctrl+C або помилці)
-  manager.save_to_yaml("books.yaml")
+  manager.save_to_yaml(YAML_FILE)
   puts "Дані збережено. До побачення!"
 end
