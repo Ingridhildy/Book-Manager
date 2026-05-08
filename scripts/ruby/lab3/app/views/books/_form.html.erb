@@ -1,0 +1,50 @@
+<%= form_with(model: book) do |f| %>
+  <% if book.errors.any? %>
+    <div style="color: red">
+      <ul>
+        <% book.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= f.label :title, "Назва" %><br>
+    <%= f.text_field :title %>
+  </p>
+
+  <p>
+    <%= f.label :genre, "Жанр" %><br>
+    <%# Вибір жанру з існуючих записів таблиці genres через pluck %>
+    <%= f.select :genre, Genre.pluck(:name), { include_blank: "— оберіть жанр —" } %>
+  </p>
+
+  <p>
+    <%= f.label :publisher, "Видавництво" %><br>
+    <%= f.text_field :publisher %>
+  </p>
+
+  <p>
+    <%= f.label :published_date, "Дата публікації" %><br>
+    <%= f.date_field :published_date %>
+  </p>
+
+  <p>
+    <%= f.label :pages, "Кількість сторінок" %><br>
+    <%= f.number_field :pages, min: 1 %>
+  </p>
+
+  <p>
+    <%= f.label :rating, "Рейтинг (0–10)" %><br>
+    <%= f.number_field :rating, min: 0, max: 10, step: 0.1 %>
+  </p>
+
+  <p>
+    <%= f.label :status, "Статус" %><br>
+    <%# Вибір зі значень enum — Book.statuses.keys повертає ["want_to_read", "reading", "read"] %>
+    <%= f.select :status, Book.statuses.keys %>
+  </p>
+
+  <p><%= f.submit "Зберегти" %></p>
+<% end %>

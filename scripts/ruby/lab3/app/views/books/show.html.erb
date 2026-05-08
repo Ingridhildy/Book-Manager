@@ -1,0 +1,13 @@
+<h1><%= @book.title %></h1>
+
+<dl>
+  <dt>Жанр</dt>        <dd><%= @book.genre %></dd>
+  <dt>Видавництво</dt> <dd><%= @book.publisher %></dd>
+  <dt>Дата виходу</dt> <dd><%= @book.published_date %></dd>
+  <dt>Сторінок</dt>    <dd><%= @book.pages %></dd>
+  <dt>Рейтинг</dt>     <dd><%= @book.rating %></dd>
+  <dt>Статус</dt>      <dd><%= @book.status %></dd>
+</dl>
+
+<%= link_to "Редагувати", edit_book_path(@book) %> |
+<%= link_to "Назад до списку", books_path %>

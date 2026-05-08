@@ -1,0 +1,32 @@
+<h1>Прочитані книги</h1>
+
+<%= link_to "← Усі книги", books_path %>
+
+<% if @books.empty? %>
+  <p>Прочитаних книг ще немає.</p>
+<% else %>
+  <table border="1" cellpadding="6">
+    <thead>
+      <tr>
+        <th>Назва</th>
+        <th>Жанр</th>
+        <th>Видавництво</th>
+        <th>Сторінки</th>
+        <th>Рейтинг</th>
+        <th>Дії</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @books.each do |book| %>
+        <tr>
+          <td><%= book.title %></td>
+          <td><%= book.genre %></td>
+          <td><%= book.publisher %></td>
+          <td><%= book.pages %></td>
+          <td><%= book.rating %></td>
+          <td><%= link_to "Детальніше", book_path(book) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

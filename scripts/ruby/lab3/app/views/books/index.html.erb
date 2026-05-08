@@ -1,0 +1,42 @@
+<h1>Каталог книг</h1>
+
+<%= link_to "Прочитані книги", read_books_path, class: "button" %> |
+<%= link_to "Додати книгу", new_book_path, class: "button" %> |
+<%= link_to "Жанри", genres_path, class: "button" %>
+
+<% if notice.present? %>
+  <p style="color: green"><%= notice %></p>
+<% end %>
+
+<table border="1" cellpadding="6">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Назва</th>
+      <th>Жанр</th>
+      <th>Видавництво</th>
+      <th>Сторінки</th>
+      <th>Рейтинг</th>
+      <th>Статус</th>
+      <th>Дії</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @books.each do |book| %>
+      <tr>
+        <td><%= book.id %></td>
+        <td><%= book.title %></td>
+        <td><%= book.genre %></td>
+        <td><%= book.publisher %></td>
+        <td><%= book.pages %></td>
+        <td><%= book.rating %></td>
+        <td><%= book.status %></td>
+        <td>
+          <%= link_to "Детальніше", book_path(book) %> |
+          <%= link_to "Редагувати", edit_book_path(book) %> |
+          <%= link_to "Видалити", book_path(book), data: { turbo_method: :delete, turbo_confirm: "Видалити книгу?" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
