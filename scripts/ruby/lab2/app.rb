@@ -3,90 +3,130 @@ require_relative 'book_manager'
 
 manager = BookManager.new
 
-# автозавантаження
+# Автозавантаження при старті: спочатку YAML, потім JSON, потім порожній стан
+# YAML має пріоритет, бо він зберігається автоматично при виході
+puts "Завантаження даних..."
+yaml_loaded = false
+
 begin
   manager.load_from_yaml("books.yaml")
-rescue
+  yaml_loaded = true
+rescue Errno::ENOENT
+  # YAML не знайдено — пробуємо JSON
+end
+
+unless yaml_loaded
   begin
     manager.load_from_json("books.json")
-  rescue
+  rescue Errno::ENOENT
     puts "Починаємо з порожньої колекції"
   end
 end
 
+# Основний цикл програми
+# ensure гарантує збереження навіть при помилці або Ctrl+C
 begin
   loop do
     puts
+    puts "======= КАТАЛОГ КНИГ ======="
     puts "1. Додати книгу"
     puts "2. Показати всі книги"
-    puts "3. Видалити книгу"
-    puts "4. Пошук за назвою"
-    puts "5. Фільтр за жанром"
-    puts "6. Фільтр за статусом"
+    puts "3. Редагувати книгу"
+    puts "4. Видалити книгу"
+    puts "5. Пошук за назвою"
+    puts "6. Фільтр за жанром"
+    puts "7. Фільтр за статусом"
     puts "0. Вихід"
+    puts "============================="
+    print "Ваш вибір: "
 
     choice = gets.chomp.to_i
 
     case choice
 
     when 1
-      puts "Назва:"
+      print "Назва: "
       title = gets.chomp
 
-      puts "Автори (через кому):"
-      authors = gets.chomp.split(",")
+      print "Автори (через кому): "
+      authors = gets.chomp.split(",").map(&:strip)
 
-      puts "Жанри:"
-      genres = gets.chomp.split(",")
+      print "Жанри (через кому): "
+      genres = gets.chomp.split(",").map(&:strip)
 
-      puts "Видавництво:"
+      print "Видавництво: "
       publisher = gets.chomp
 
-      puts "Дата:"
+      print "Дата публікації (РРРР-ММ-ДД): "
       published_date = gets.chomp
 
-      puts "Сторінки:"
+      print "Кількість сторінок: "
       pages = gets.chomp.to_i
 
-      puts "Рейтинг:"
+      print "Рейтинг (0.0 - 10.0): "
       rating = gets.chomp.to_f
 
       book = Book.new(title, authors, genres, publisher, published_date, pages, rating)
-
       manager.add_book(book)
 
     when 2
       manager.list_books
 
     when 3
-      puts "ID книги:"
+      print "ID книги для редагування: "
+      id = gets.chomp.to_i
+
+      print "Поле для зміни (title / authors / genres / publisher / published_date / pages / rating / status): "
+      field = gets.chomp.strip
+
+      print "Нове значення: "
+      value = gets.chomp
+
+      # Конвертуємо значення до потрібного типу
+      value = case field
+              when "pages"              then value.to_i
+              when "rating"             then value.to_f
+              when "authors", "genres"  then value.split(",").map(&:strip)
+              else value
+              end
+
+      manager.edit_book(id, { field.to_sym => value })
+
+    when 4
+      print "ID книги для видалення: "
       id = gets.chomp.to_i
       manager.delete_book(id)
 
-    when 4
-      puts "Назва для пошуку:"
-      query = gets.chomp
-      puts manager.find_by_title(query)
-
     when 5
-      puts "Жанр:"
-      genre = gets.chomp
-      puts manager.filter_by_genre(genre)
+      print "Пошуковий запит (назва): "
+      query = gets.chomp
+      results = manager.find_by_title(query)
+      manager.print_results(results)
 
     when 6
-      puts "Статус:"
-      status = gets.chomp
-      puts manager.filter_by_status(status)
+      print "Жанр: "
+      genre = gets.chomp.strip
+      results = manager.filter_by_genre(genre)
+      manager.print_results(results)
+
+    when 7
+      puts "Доступні статуси: want_to_read / reading / read"
+      print "Статус: "
+      status = gets.chomp.strip
+      results = manager.filter_by_status(status)
+      manager.print_results(results)
 
     when 0
+      puts "До побачення!"
       break
 
     else
-      puts "Невірний вибір"
+      puts "Невірний вибір. Спробуйте ще раз."
     end
   end
 
 ensure
+  # Автозбереження у YAML при будь-якому виході (навіть при Ctrl+C або помилці)
   manager.save_to_yaml("books.yaml")
-  puts "Дані збережено"
+  puts "Дані збережено. До побачення!"
 end
