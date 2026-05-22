@@ -1,0 +1,14 @@
+NOTE: write those commands in Shell
+
+start lab 1
+irb -r ./scripts/ruby/lab1/books.rb
+or
+irb -r ./scripts/ruby/lab1/session.rb
+
+start lab 2
+cd scripts/ruby/lab 2
+ruby app.rb
+
+start lab 3
+cd scripts/ruby/lab3
+bundle exec rails server -p 3001
