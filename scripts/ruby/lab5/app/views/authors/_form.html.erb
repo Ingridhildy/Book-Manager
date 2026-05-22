@@ -1,0 +1,23 @@
+<%= form_with(model: author) do |f| %>
+  <% if author.errors.any? %>
+    <div class="alert alert-danger">
+      <ul class="mb-0">
+        <% author.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :name, "Ім'я автора", class: "form-label" %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :book_id, "Книга", class: "form-label" %>
+    <%= f.select :book_id, Book.all.map { |b| [b.title, b.id] }, {}, class: "form-select" %>
+  </div>
+
+  <%= f.submit "Зберегти", class: "btn btn-primary" %>
+<% end %>

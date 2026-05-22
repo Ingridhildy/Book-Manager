@@ -1,0 +1,18 @@
+<h1 class="mb-4">Всі автори</h1>
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr><th>Ім'я</th><th>ID книги</th><th>Дії</th></tr>
+  </thead>
+  <tbody>
+    <% @authors.each do |author| %>
+      <tr>
+        <td><%= author.name %></td>
+        <td><%= author.book_id %></td>
+        <td>
+          <%= link_to "Ред.", edit_author_path(author), class: "btn btn-sm btn-outline-secondary" %>
+          <%= button_to "Видалити", author, method: :delete, data: { turbo_confirm: "Видалити?" }, class: "btn btn-sm btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

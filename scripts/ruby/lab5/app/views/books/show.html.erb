@@ -1,0 +1,39 @@
+<div class="card mb-4" style="max-width: 600px;">
+  <div class="card-body">
+    <h1 class="card-title"><%= @book.title %></h1>
+    <p class="card-text"><strong>Жанр:</strong> <%= @book.genre %></p>
+    <p class="card-text"><strong>Видавництво:</strong> <%= @book.publisher %></p>
+    <p class="card-text"><strong>Дата публікації:</strong> <%= @book.published_date %></p>
+    <p class="card-text"><strong>Сторінок:</strong> <%= @book.pages %></p>
+    <p class="card-text"><strong>Рейтинг:</strong> <%= @book.rating %></p>
+    <p class="card-text"><strong>ISBN:</strong> <%= @book.isbn %></p>
+    <p class="card-text"><strong>Статус:</strong> <%= status_badge(@book) %></p>
+  </div>
+</div>
+
+<h3>Автори</h3>
+<% if @authors.any? %>
+  <ul class="list-group mb-3" style="max-width: 400px;">
+    <% @authors.each do |author| %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <%= author.name %>
+        <div>
+          <%= link_to "Ред.", edit_author_path(author), class: "btn btn-sm btn-outline-secondary me-1" %>
+          <%= button_to "✕", author_path(author), method: :delete,
+              data: { turbo_confirm: "Видалити автора?" },
+              class: "btn btn-sm btn-outline-danger" %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text-muted">Авторів ще немає.</p>
+<% end %>
+
+<%= link_to "+ Додати автора", new_author_path(book_id: @book.id), class: "btn btn-outline-primary btn-sm mb-4" %>
+
+<div>
+  <%= link_to "Редагувати", edit_book_path(@book), class: "btn btn-outline-secondary" %>
+  <%= button_to "Видалити", @book, method: :delete, data: { turbo_confirm: "Видалити цю книгу?" }, class: "btn btn-danger" %>
+  <%= link_to "До списку", books_path, class: "btn btn-link" %>
+</div>
