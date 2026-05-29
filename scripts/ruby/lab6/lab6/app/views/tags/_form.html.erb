@@ -1,0 +1,18 @@
+<%= form_with(model: tag) do |f| %>
+  <% if tag.errors.any? %>
+    <div style="color: red">
+      <ul>
+        <% tag.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= f.label :name, "Назва тегу" %><br>
+    <%= f.text_field :name, placeholder: "наприклад: bestseller" %>
+  </p>
+
+  <p><%= f.submit "Зберегти" %></p>
+<% end %>

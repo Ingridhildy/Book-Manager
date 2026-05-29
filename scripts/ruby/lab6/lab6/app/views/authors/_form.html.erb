@@ -1,0 +1,28 @@
+<%= form_with(model: [@book, author]) do |f| %>
+  <% if author.errors.any? %>
+    <div style="color: red">
+      <ul>
+        <% author.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= f.label :name, "Ім'я автора" %><br>
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.label :country, "Країна" %><br>
+    <%= f.text_field :country %>
+  </p>
+
+  <p>
+    <%= f.label :birth_year, "Рік народження" %><br>
+    <%= f.number_field :birth_year, min: 1000, max: Date.today.year %>
+  </p>
+
+  <p><%= f.submit "Зберегти" %></p>
+<% end %>

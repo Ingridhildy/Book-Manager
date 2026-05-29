@@ -1,0 +1,31 @@
+<h1>Теги</h1>
+
+<%= link_to "Новий тег", new_tag_path %> |
+<%= link_to "Каталог книг", books_path %>
+
+<% if notice.present? %>
+  <p style="color: green"><%= notice %></p>
+<% end %>
+
+<table border="1" cellpadding="6">
+  <thead>
+    <tr>
+      <th>Назва</th>
+      <th>Книг</th>
+      <th>Дії</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tags.each do |tag| %>
+      <tr>
+        <td><%= link_to tag.name, tag_path(tag) %></td>
+        <td><%= tag.books.count %></td>
+        <td>
+          <%= link_to "Редагувати", edit_tag_path(tag) %> |
+          <%= link_to "Видалити", tag_path(tag),
+                data: { turbo_method: :delete, turbo_confirm: "Видалити тег «#{tag.name}»?" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

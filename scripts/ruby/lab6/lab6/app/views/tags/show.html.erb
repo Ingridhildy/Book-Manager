@@ -1,0 +1,15 @@
+<h1>Тег: <%= @tag.name %></h1>
+
+<h2>Книги з цим тегом</h2>
+<% if @books.any? %>
+  <ul>
+    <% @books.each do |book| %>
+      <li><%= link_to book.title, book_path(book) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p><em>Немає книг.</em></p>
+<% end %>
+
+<%= link_to "Редагувати", edit_tag_path(@tag) %> |
+<%= link_to "Назад до тегів", tags_path %>

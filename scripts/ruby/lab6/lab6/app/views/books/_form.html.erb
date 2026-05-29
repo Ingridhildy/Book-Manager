@@ -1,0 +1,64 @@
+<%= form_with(model: book) do |f| %>
+  <%# Блок помилок валідації %>
+  <% if book.errors.any? %>
+    <div style="color: red; border: 1px solid red; padding: 8px; margin-bottom: 12px;">
+      <strong>Не вдалося зберегти книгу:</strong>
+      <ul>
+        <% book.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= f.label :title, "Назва" %><br>
+    <%= f.text_field :title %>
+  </p>
+
+  <%# Частина 1: collection_select замість pluck — зв'язок belongs_to :genre %>
+  <p>
+    <%= f.label :genre_id, "Жанр" %><br>
+    <%= f.collection_select :genre_id, Genre.all.order(:name), :id, :name,
+          { include_blank: "— оберіть жанр —" } %>
+  </p>
+
+  <p>
+    <%= f.label :publisher, "Видавництво" %><br>
+    <%= f.text_field :publisher %>
+  </p>
+
+  <p>
+    <%= f.label :published_date, "Дата публікації" %><br>
+    <%= f.date_field :published_date %>
+  </p>
+
+  <p>
+    <%= f.label :pages, "Кількість сторінок" %><br>
+    <%= f.number_field :pages, min: 1, max: 10000 %>
+  </p>
+
+  <p>
+    <%= f.label :rating, "Рейтинг (0–10)" %><br>
+    <%= f.number_field :rating, min: 0, max: 10, step: 0.1 %>
+  </p>
+
+  <p>
+    <%= f.label :status, "Статус" %><br>
+    <%= f.select :status, Book.statuses.keys %>
+  </p>
+
+  <%# Частина 3: чекбокси для many-to-many тегів %>
+  <p>
+    <strong>Теги:</strong><br>
+    <% Tag.all.order(:name).each do |tag| %>
+      <%= check_box_tag "book[tag_ids][]", tag.id, book.tags.include?(tag), id: "book_tag_#{tag.id}" %>
+      <%= label_tag "book_tag_#{tag.id}", tag.name %>
+      &nbsp;
+    <% end %>
+    <%# Прихований інпут щоб при знятті всіх чекбоксів tag_ids надсилався як порожній масив %>
+    <%= hidden_field_tag "book[tag_ids][]", "" %>
+  </p>
+
+  <p><%= f.submit "Зберегти" %></p>
+<% end %>
