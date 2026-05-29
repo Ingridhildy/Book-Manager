@@ -1,0 +1,14 @@
+# Команди для налаштування (виконувати по порядку)
+
+bundle install
+
+# Devise
+rails generate devise:install
+rails generate devise User
+rails generate migration AddUserRefToBooks user:references
+rails generate migration CreateCollaborations
+
+# RSpec
+rails generate rspec:install
+
+rails db:migrate

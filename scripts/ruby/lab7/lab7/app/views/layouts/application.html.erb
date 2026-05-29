@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Каталог книг</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+</head>
+<body>
+
+<%# ── Навігація з інформацією про поточного користувача ── %>
+<nav style="background: #f0f0f0; padding: 8px 16px; margin-bottom: 16px; display: flex; gap: 16px; align-items: center;">
+  <%= link_to "📚 Каталог", books_path %>
+  <%= link_to "Жанри", genres_path %>
+  <%= link_to "Теги", tags_path %>
+
+  <span style="margin-left: auto;">
+    <% if user_signed_in? %>
+      <%# Частина 1: відображення email поточного користувача %>
+      <strong><%= current_user.email %></strong> |
+      <%= link_to "Вийти", destroy_user_session_path,
+            data: { turbo_method: :delete } %>
+    <% else %>
+      <%= link_to "Увійти", new_user_session_path %> |
+      <%= link_to "Реєстрація", new_user_registration_path %>
+    <% end %>
+  </span>
+</nav>
+
+<%# Flash-повідомлення %>
+<% if notice.present? %>
+  <p style="color: green; padding: 0 16px;"><%= notice %></p>
+<% end %>
+<% if alert.present? %>
+  <p style="color: red; padding: 0 16px;"><%= alert %></p>
+<% end %>
+
+<main style="padding: 0 16px;">
+  <%= yield %>
+</main>
+
+</body>
+</html>

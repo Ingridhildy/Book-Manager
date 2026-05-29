@@ -1,0 +1,66 @@
+<h1><%= @book.title %></h1>
+
+<%# Частина 1: відображення автора запису %>
+<p style="color: gray; font-size: 0.9em;">
+  Додав(ла): <strong><%= @book.user.email %></strong>
+</p>
+
+<dl>
+  <dt>Жанр</dt>        <dd><%= @book.genre&.name || "—" %></dd>
+  <dt>Видавництво</dt> <dd><%= @book.publisher %></dd>
+  <dt>Дата виходу</dt> <dd><%= @book.published_date %></dd>
+  <dt>Сторінок</dt>    <dd><%= @book.pages %></dd>
+  <dt>Рейтинг</dt>     <dd><%= @book.rating %></dd>
+  <dt>Статус</dt>      <dd><%= @book.status %></dd>
+
+  <dt>Теги</dt>
+  <dd>
+    <% if @book.tags.any? %>
+      <%= @book.tags.map(&:name).join(", ") %>
+    <% else %>
+      <em>немає тегів</em>
+    <% end %>
+  </dd>
+</dl>
+
+<h2>Автори</h2>
+<% if @book.authors.any? %>
+  <table border="1" cellpadding="6">
+    <thead>
+      <tr>
+        <th>Ім'я</th><th>Країна</th><th>Рік народження</th><th>Дії</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @book.authors.each do |author| %>
+        <tr>
+          <td><%= author.name %></td>
+          <td><%= author.country %></td>
+          <td><%= author.birth_year %></td>
+          <td>
+            <% if @book.user == current_user %>
+              <%= link_to "Редагувати", edit_book_author_path(@book, author) %> |
+              <%= link_to "Видалити", book_author_path(@book, author),
+                    data: { turbo_method: :delete, turbo_confirm: "Видалити автора?" } %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p><em>Авторів не додано.</em></p>
+<% end %>
+
+<% if @book.user == current_user %>
+  <p><%= link_to "+ Додати автора", new_book_author_path(@book) %></p>
+<% end %>
+
+<hr>
+<% if @book.user == current_user %>
+  <%= link_to "Редагувати", edit_book_path(@book) %> |
+  <%= link_to "Видалити", book_path(@book),
+        data: { turbo_method: :delete, turbo_confirm: "Видалити книгу?" },
+        style: "color: red" %> |
+<% end %>
+<%= link_to "Назад до списку", books_path %>
